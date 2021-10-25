@@ -26,7 +26,7 @@ public class PostgreSQLSink extends RichSinkFunction<Row> {
         Class.forName(BaseConf.DRIVERNAME);
         connection = DriverManager.getConnection(BaseConf.URL, BaseConf.USERNAME, BaseConf.PASSWORD);
         String sql = "insert into weardata_feature(id,axis,wstart,avg_data,stddev_pop_data,stddev_samp_data,var_pop_data,var_samp_data," +
-                "rms,peak,cf,kv,s,if_,clf) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                "rms,peak,cf,kv,s,if_,clf,state) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         preparedStatement = connection.prepareStatement(sql);
         super.open(parameters);
     }
@@ -48,6 +48,7 @@ public class PostgreSQLSink extends RichSinkFunction<Row> {
             preparedStatement.setDouble(13, r.getFieldAs(12));
             preparedStatement.setFloat(14, r.getFieldAs(13));
             preparedStatement.setFloat(15, r.getFieldAs(14));
+            preparedStatement.setString(16, r.getFieldAs(15));
             //System.out.println("Start insert");
             preparedStatement.executeUpdate();
             //preparedStatement.addBatch();

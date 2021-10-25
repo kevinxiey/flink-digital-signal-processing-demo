@@ -42,7 +42,7 @@ public class MachineToolWearDataSource implements SourceFunction<MachineToolWear
             }
             MachineToolWearData machineToolWearData = MachineToolWearData.of(itemStrArr[0],itemStrArr[1],
                     Float.parseFloat(itemStrArr[2]), eventTs,
-                    itemStrArr[3]);
+                    itemStrArr[4]);
             //timeDiff = eventTs - lastEventTs;
             timeDiff = ChronoUnit.MILLIS.between(lastEventTs,eventTs);
            // System.out.println(timeDiff);
