@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/flink/machinetoolweardetection/modelTraining/mlruns/0/81b331910eab457796f7d26c2ed9e9f8/artifacts
+end_time: 1635362447699
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 81b331910eab457796f7d26c2ed9e9f8
+run_uuid: 81b331910eab457796f7d26c2ed9e9f8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1635362442168
+status: 3
+tags: []
+user_id: kevinxiey

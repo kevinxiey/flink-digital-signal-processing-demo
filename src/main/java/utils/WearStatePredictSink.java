@@ -15,8 +15,10 @@ import java.sql.Timestamp;
 public class WearStatePredictSink extends RichSinkFunction<Row> {
     private static final long serialVersionUID = 1L;
     private Booster xgb;
+    private MlflowRestApi mlflowRestApi;
     @Override
     public void open(Configuration parameters) throws Exception {
+        mlflowRestApi = new MlflowRestApi();
         xgb = XGBoost.loadModel("modelTraining/xgb.model");
         super.open(parameters);
     }
@@ -44,26 +46,40 @@ public class WearStatePredictSink extends RichSinkFunction<Row> {
             df[14] = r.getFieldAs("z_rms");
             df[15] = r.getFieldAs("vb_rms");
             DMatrix dt = new DMatrix(df,1,df.length,0);
+            //invoke local predication
             float[][] pt = xgb.predict(dt);
-            String predictState = "";
-            switch ((int) pt[0][0]) {
-                case 0:
-                    predictState = "new";
-                    break;
-                case 1:
-                    predictState = "initial";
-                    break;
-                case 2:
-                    predictState = "normal";
-                    break;
-                case 3:
-                    predictState = "accelerated";
-                    break;
+            String predictState = this.predictState((int) pt[0][0]);
+            String predictStateRemotely = "";
+            try{
+                //invoke remote predication by http rest api
+                int rpt = mlflowRestApi.mlPredict(df);
+                predictStateRemotely = this.predictState(rpt);
+            }catch(Exception e){
+                e.printStackTrace();
             }
-            System.out.println("**************--"+ts+"; Machine Id:"+id+"; Original State:"+ r.getFieldAs("state")+"; Prediction State:" + predictState+" --*************");
+            System.out.println("**************--"+ts+"; Machine Id:"+id+"; Original State:"+ r.getFieldAs("state")+"; Local prediction:" + predictState+"; Remote prediction:" + predictStateRemotely+" --*************");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String predictState(int state){
+        String predictState = "predict failed";
+        switch (state) {
+            case 0:
+                predictState = "new";
+                break;
+            case 1:
+                predictState = "initial";
+                break;
+            case 2:
+                predictState = "normal";
+                break;
+            case 3:
+                predictState = "accelerated";
+                break;
+        }
+        return predictState;
     }
 
     @Override

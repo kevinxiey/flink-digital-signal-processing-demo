@@ -158,7 +158,7 @@ public class MachineToolWearDetectionJob {
         // interpret the insert-only Table as a DataStream again
         DataStream<Row> resultStream = tEnv.toDataStream(resultTable);
         // add a printing sink and execute in DataStream API
-        resultStream.print();
+        //resultStream.print();
         //save data to DB
         // resultStream.addSink(new PostgreSQLSink());
         Table ftable =
