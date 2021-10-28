@@ -6,4 +6,4 @@
 ![image](https://github.com/kevinxiey/flink-digital-signal-processing-demo/blob/main/src/main/resources/img/pic5.png)
 ![image](https://github.com/kevinxiey/flink-digital-signal-processing-demo/blob/main/src/main/resources/img/pic2.png)
 ![image](https://github.com/kevinxiey/flink-digital-signal-processing-demo/blob/main/src/main/resources/img/pic3.png)
-![image](https://github.com/kevinxiey/flink-digital-signal-processing-demo/blob/main/src/main/resources/img/pic4.png)
+![image](https://github.com/kevinxiey/flink-digital-signal-processing-demo/blob/main/src/main/resources/img/pic6.png)
